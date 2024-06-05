@@ -1,0 +1,10 @@
+<%# locals: (html_tag:, instance:) -%>
+<% unless html_tag =~ /^<label/ %>
+  <% field_html = Nokogiri::HTML::DocumentFragment.parse(html_tag) %>
+  <% field_html.children.add_class("ring-red-500") %>
+  <%== field_html %>
+  <span class='text-red-500 text-xs'>
+    <%= instance.error_message.to_sentence %> </span>
+<% else %>
+  <%= html_tag %>
+<% end %>

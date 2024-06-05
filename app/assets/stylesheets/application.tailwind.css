@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.msg-success {
+  @apply bg-green-300 text-green-900;
+}
+.msg-error {
+  @apply bg-red-300 text-red-900;
+}
+
+.msg-alert {
+  @apply bg-yellow-300 text-red-900;
+}
+
+.msg-notice {
+  @apply bg-blue-300 text-red-900;
+}

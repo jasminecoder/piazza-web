@@ -1,0 +1,8 @@
+<%# locals: () -%>
+<div data-turbo-temporary>
+  <% flash.each do |level, message| %>
+    <div class=<%= "msg-#{level}"%>>
+      <%= message %>
+    </div>
+  <% end %>
+</div>
