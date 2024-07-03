@@ -5,11 +5,12 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     get sign_up_path
     assert_response :ok
 
-    assert_difference [ "User.count", "Organization.count" ], 1 do
+    assert_difference ["User.count", "Organization.count"], 1 do
       post sign_up_path, params: {
         user: {
           name: "John",
           email: "johndoe@example.com",
+          password: "password",
           password_confirmation: "password"
         }
       }
@@ -21,23 +22,24 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       text: I18n.t("users.create.welcome", name: "John")
   end
 
-  test "renders errors if input data is invalid" do 
+  test "renders errors if input data is invalid" do
     get sign_up_path
     assert_response :ok
-    
-    assert_no_difference [ "User.count", "Organization.count" ] do 
+
+    assert_no_difference ["User.count", "Organization.count"] do
       post sign_up_path, params: {
         user: {
-        name: "John",
-        email: "johndoe@example.com",
-        password_confirmation: "pass"
-        }  
+          name: "John",
+          email: "johndoe@example.com",
+          password: "pass",
+          password_confirmation: "pass"
+        }
       }
     end
-    
-    # assert_response :unprocessable_entity
-    # assert_select "p.is-danger",
-      # text:
-        # I18n.t("activerecord.errors.models.user.attributes.password.too_short")
-    # end
+  end
+  # assert_response :unprocessable_entity
+  # assert_select "p.is-danger",
+  # text:
+  # I18n.t("activerecord.errors.models.user.attributes.password.too_short")
+  # end
 end

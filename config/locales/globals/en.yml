@@ -1,2 +1,5 @@
 en:
   piazza: Piazza
+  login_required: You need to log in to view this page
+  login: Login
+  signup: Signup

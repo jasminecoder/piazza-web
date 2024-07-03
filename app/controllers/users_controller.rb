@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  skip_authentication only: [:new, :create]
   def new
     @user = User.new
   end
@@ -8,7 +9,9 @@ class UsersController < ApplicationController
 
     if @user.save
       @organization = Organization.create(members: [@user])
-      # TODO: Log in user ...
+      # Login user
+      @app_session = @user.app_sessions.create
+      log_in(@app_session)
       redirect_to root_path,
         status: :see_other,
         flash: {success: t(".welcome", name: @user.name)}
@@ -20,6 +23,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
+    Rails.logger.info("THIS IS THE PARAMS: #{params[:user][:name]}")
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
 end
