@@ -18,6 +18,6 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
         password: "password"
       }
     }
-    assert_select ".notification", I18n.t("sessions.create.incorrect_details")
+    assert_select ".msg-danger", I18n.t("sessions.create.incorrect_details")
   end
 end

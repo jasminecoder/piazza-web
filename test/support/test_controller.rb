@@ -1,4 +1,6 @@
 class TestController < ActionController::Base
+  include Authenticate
+
   def index
   end
 

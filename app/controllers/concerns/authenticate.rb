@@ -34,7 +34,7 @@ module Authenticate
   private
 
   def require_login
-    flash.now[:notice] = t(".login_required")
+    flash.now[:notice] = t("login_required")
     render "sessions/new", status: :unauthorized
   end
 

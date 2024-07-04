@@ -18,7 +18,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to root_path
     follow_redirect!
-    assert_select ".notification.is-success",
+    assert_select ".msg-success",
       text: I18n.t("users.create.welcome", name: "John")
   end
 

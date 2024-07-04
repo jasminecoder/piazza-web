@@ -1,6 +1,6 @@
 require "test_helper"
 
-class AuthenticateTestsController < TestController include Authenticate
+class AuthenticateTestsController < TestController
   skip_authentication only: [:new, :create]
   allow_unauthenticated only: :show
 

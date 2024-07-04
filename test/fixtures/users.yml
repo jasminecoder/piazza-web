@@ -5,6 +5,11 @@ jerry:
   email: jerry@example.com
   password_digest: <%= BCrypt::Password.create("password") %>
 
+luis:
+  name: Luis
+  email: luis@example.com
+  password_digest: <%= BCrypt::Password.create("password") %>
+
 elaine:
   name: Elaine
   email: elaine@example.com
