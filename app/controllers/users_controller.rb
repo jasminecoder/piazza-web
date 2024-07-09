@@ -23,7 +23,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    Rails.logger.info("THIS IS THE PARAMS: #{params[:user][:name]}")
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
 end

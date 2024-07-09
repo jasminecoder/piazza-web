@@ -1,24 +1,66 @@
-<!-- component -->
-<header>
-  <nav>
-    <div class="">
-      <div class="flex justify-between h-16 px-10 shadow items-center">
-        <div class="flex items-center space-x-8">
-          <h1 class="text-xl lg:text-2xl font-bold cursor-pointer">
-            <%= link_to t("piazza"), root_path%>
-          </h1>
-          <div class="hidden md:flex justify-around space-x-4">
-            <a href="#" class="hover:text-indigo-600 text-gray-700">Home</a>
-            <a href="#" class="hover:text-indigo-600 text-gray-700">About</a>
-            <a href="#" class="hover:text-indigo-600 text-gray-700">Service</a>
-            <a href="#" class="hover:text-indigo-600 text-gray-700">Contact</a>
+<%# locals: () -%>
+<!-- app/views/layouts/_navbar.html.erb -->
+<nav class="bg-white border-b border-gray-300 shadow-lg" data-controller="navbar">
+  <div class="container mx-auto px-4 py-5 flex justify-between items-center">
+    <div class="text-slate-600 text-3xl font-bold">
+      <%= link_to t("piazza"), root_path %>
+    </div>
+    <%# starts hamburger menu %>
+    <div class="relative md:hidden ">
+      <button data-navbar-target="button" class="navbar-burger text-slate-600 focus:outline-none">
+        <span class="block w-6 h-0.5 bg-current mb-1"></span>
+        <span class="block w-6 h-0.5 bg-current mb-1"></span>
+        <span class="block w-6 h-0.5 bg-current"></span>
+      </button>
+      <%# starts hamburger menu dropdown %>
+      <div data-navbar-target="menu" class="hidden absolute -right-4 top-12 mt-2 w-screen font-light bg-gray-100 rounded-md shadow-lg py-2">
+        <% if Current.user %>
+          <p class="px-4 py-2 text-slate-600 font-semibold text-lg"><%= "#{t(".hello")}, #{Current.user.name}"%></p>
+          <%= link_to 'Profile', "#", class: 'block px-4 py-2 text-slate-600 bg-white mx-2 my-2 rounded-lg' %>
+          <%= link_to 'Create Ads', "#", class: 'block px-4 py-2 text-slate-600 bg-white mx-2 my-2 rounded-lg' %>
+          <%= link_to 'Messages', "#", class: 'block px-4 py-2 text-slate-600 bg-white mx-2 my-2 rounded-lg' %>
+          <%= link_to 'My Ads', "#", class: 'block px-4 py-2 text-slate-600 bg-white mx-2 my-2 rounded-lg' %>
+          <%= link_to 'Saved Ads', "#", class: 'block px-4 py-2 text-slate-600 bg-white mx-2 my-2 rounded-lg' %>
+          <div class="border-t border-gray-300 mx-1"></div>
+          <%= link_to 'Log out', "#", method: :delete, class: 'block px-4 py-2 text-slate-600 hover:bg-gray-100' %>
+        <% else %>
+          <%= link_to 'Create Ads', "#", class: 'block px-4 py-2 text-slate-600 hover:bg-gray-100' %>
+          <%= link_to 'Log In', login_path, class: 'block bg-indigo-600 text-white px-4 py-2 mt-2 mx-2 rounded-xl hover:bg-indigo-500' %>
+          <%= link_to 'Sign Up', sign_up_path, class: 'block bg-lime-600 text-white px-4 py-2 mt-1 mx-2 rounded-xl hover:bg-lime-500' %>
+        <% end %>
+      </div>
+      <%# ends hamburger menu dropdown %>
+    </div>
+    <%# ends hamburger menu %>
+    <%# starts desktop navbar %>
+    <div class="hidden md:flex items-center space-x-4 text-slate-600">
+      <%= link_to 'Create Ads', "#", class: 'hover:text-gray-900' %>
+      <% if !Current.user %>
+        <span class="text-2xl">|</span>
+      <% end %>
+      <% if Current.user %>
+        <%= link_to t(".messages"), "#", class: 'hover:text-gray-900' %>
+        <div class="relative">
+          <button data-navbar-target="userMenuButton" class="focus:outline-none">
+            <div class="flex justify-center items-center ml-10">
+              <%= Current.user.name %>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 ml-1">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+              </svg>
+            </div>
+          </button>
+          <div data-navbar-target="userMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2">
+            <%= link_to t(".profile"), "#", class: 'block px-4 py-2 text-slate-600 hover:bg-gray-100' %>
+            <%= link_to t(".my_ads"), "#", class: 'block px-4 py-2 text-slate-600 hover:bg-gray-100' %>
+            <%= link_to t(".saved_ads"), "#", class: 'block px-4 py-2 text-slate-600 hover:bg-gray-100' %>
+            <%= link_to t(".logout"), "#", method: :delete, class: 'block px-4 py-2 text-slate-600 hover:bg-gray-100' %>
           </div>
         </div>
-        <div class="flex space-x-4 items-center">
-          <%= link_to t("login"), login_path, class:"text-gray-800 text-sm uppercase"%>
-          <%= link_to t("signup"), sign_up_path, class:"bg-indigo-600 px-4 py-2 rounded text-white hover:bg-indigo-500 text-sm uppercase"%>
-        </div>
-      </div>
+      <% else %>
+        <%= link_to t("sign_up"), sign_up_path, class: 'bg-white text-slate-600 px-4 py-2 rounded-xl hover:bg-lime-500 hover:text-white' %>
+        <%= link_to t("log_in"), login_path, class: 'bg-indigo-600 text-white px-4 py-2 rounded-xl hover:bg-indigo-500' %>
+      <% end %>
     </div>
-  </nav>
-</header>
+    <%# ends desktop navbar %>
+  </div>
+</nav>
