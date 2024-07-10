@@ -16,13 +16,15 @@
       <div data-navbar-target="menu" class="hidden absolute -right-4 sm:-right-16 top-12 mt-2 w-screen font-light bg-gray-100 rounded-md shadow-lg py-2">
         <% if logged_in? %>
           <p class="px-4 py-2 text-slate-600 font-semibold text-lg"><%= "#{t(".hello")}, #{Current.user.name}"%></p>
-          <%= link_to t(".profile"), "#", class: 'block px-4 py-2 text-slate-600 bg-white mx-2 my-2 rounded-lg' %>
-          <%= link_to t(".create_ads"), "#", class: 'block px-4 py-2 text-slate-600 bg-white mx-2 my-2 rounded-lg' %>
-          <%= link_to t(".messages"), "#", class: 'block px-4 py-2 text-slate-600 bg-white mx-2 my-2 rounded-lg' %>
-          <%= link_to t(".my_ads"), "#", class: 'block px-4 py-2 text-slate-600 bg-white mx-2 my-2 rounded-lg' %>
-          <%= link_to t(".saved_ads"), "#", class: 'block px-4 py-2 text-slate-600 bg-white mx-2 my-2 rounded-lg' %>
-          <div class="border-t border-gray-300 mx-1"></div>
-          <%= link_to t(".logout"), "#", method: :delete, class: 'block px-4 py-2 text-slate-600 hover:bg-gray-100' %>
+          <%= link_to t(".profile"), "#", class: 'block px-4 py-2 text-slate-600 hover:bg-white mx-2 my-2 rounded-lg' %>
+          <%= link_to t(".create_ads"), "#", class: 'block px-4 py-2 text-slate-600 hover:bg-white mx-2 my-2 rounded-lg' %>
+          <%= link_to t(".messages"), "#", class: 'block px-4 py-2 text-slate-600 hover:bg-white mx-2 my-2 rounded-lg' %>
+          <%= link_to t(".my_ads"), "#", class: 'block px-4 py-2 text-slate-600 hover:bg-white mx-2 my-2 rounded-lg' %>
+          <%= link_to t(".saved_ads"), "#", class: 'block px-4 py-2 text-slate-600 hover:bg-white mx-2 my-2 rounded-lg' %>
+          <%# <div class="border-t border-gray-300 mx-1"></div> %>
+          <div>
+            <%= button_to t(".logout"), logout_path , method: :delete, class: 'w-full text-start px-4 py-2 text-slate-600 hover:bg-white mx-2 my-5 rounded-lg border border-red-500' %>
+          </div>
         <% else %>
           <%= link_to t(".create_ads"), "#", class: 'block px-4 py-2 text-slate-600 hover:bg-gray-100' %>
           <%= link_to t("login"), login_path, class: 'block bg-indigo-600 text-white px-4 py-2 mt-2 mx-2 rounded-xl hover:bg-indigo-500' %>
@@ -53,7 +55,7 @@
             <%= link_to t(".profile"), "#", class: 'block px-4 py-2 text-slate-600 hover:bg-gray-100' %>
             <%= link_to t(".my_ads"), "#", class: 'block px-4 py-2 text-slate-600 hover:bg-gray-100' %>
             <%= link_to t(".saved_ads"), "#", class: 'block px-4 py-2 text-slate-600 hover:bg-gray-100' %>
-            <%= link_to t(".logout"), "#", method: :delete, class: 'block px-4 py-2 text-slate-600 hover:bg-gray-100' %>
+            <%= button_to t(".logout"), logout_path, method: :delete, class: 'text-start w-full px-4 py-2 text-slate-600 hover:bg-gray-100' %>
           </div>
         </div>
       <% else %>
