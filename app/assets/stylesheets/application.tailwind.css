@@ -19,11 +19,7 @@
 
 /* CSS for the navbar */
 
-.is-active {
-  background-color: #3273dc; /* Change the background color to a primary color */
-  color: #fff; /* Change the text color to white */
-}
-
+/* starts hamburger menu: changes the three lines to "X" */
 .navbar-burger span {
   display: block;
   background-color: #334155;
@@ -44,88 +40,4 @@
 .navbar-burger.is-active span:nth-child(3) {
   transform: translateY(-6px) rotate(-45deg);
 }
-
-/* bulma css classes */
-.navbar-item {
-  display: flex;
-  align-items: center;
-  padding: 0.5rem 1rem;
-  color: #4a4a4a;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.navbar-item:hover {
-  background-color: #f5f5f5;
-}
-
-.has-dropdown {
-  position: relative;
-}
-
-.has-dropdown .dropdown-content {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  min-width: 12rem;
-  background-color: white;
-  border: 1px solid #dbdbdb;
-  border-radius: 0.25rem;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-}
-
-.is-hoverable:hover .dropdown-content {
-  display: block;
-}
-
-.navbar-link {
-  display: block;
-  padding: 0.5rem 0.75rem;
-  font-size: 1rem;
-  color: #4a4a4a;
-  text-decoration: none;
-  cursor: pointer;
-  transition: color 0.2s ease, background-color 0.2s ease;
-}
-
-.navbar-link:hover,
-.navbar-link:focus {
-  color: #3273dc;
-  background-color: #fafafa;
-}
-
-.navbar-dropdown {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  min-width: 12rem;
-  padding: 0.5rem 0;
-  background-color: white;
-  border: 1px solid #dbdbdb;
-  border-radius: 0.25rem;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-}
-
-.navbar-dropdown .navbar-item {
-  padding: 0.5rem 1rem;
-  white-space: nowrap;
-}
-
-.navbar-dropdown .navbar-item:hover,
-.navbar-dropdown .navbar-item:focus {
-  background-color: #f5f5f5;
-  color: #3273dc;
-}
-
-.navbar-link.is-active + .navbar-dropdown {
-  display: block;
-}
-
-.is-right {
-  right: 0;
-  left: auto;
-}
+/* ends hamburger menu: changes the three lines to "X" */
