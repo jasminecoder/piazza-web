@@ -1,19 +1,22 @@
+databases:
+  - name: piazza
+    databaseName: piazza
+    user: piazza
+    plan: free
+
 services:
   - type: web
-    name: my_app-web
-    env: ruby
+    name: piazza
+    runtime: ruby
     plan: free
-    numInstances: 1
-    buildCommand: ./bin/render-build.sh
-    startCommand: bundle exec puma -C config/deploy/puma.rb
+    buildCommand: './bin/render-build.sh'
+    startCommand: 'bundle exec rails server'
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: my_app-db
+          name: piazza
           property: connectionString
       - key: RAILS_MASTER_KEY
         sync: false
-databases:
-  - name: my_app-db
-    plan: free
-    postgresMajorVersion: 14
+      - key: WEB_CONCURRENCY
+        value: 2
