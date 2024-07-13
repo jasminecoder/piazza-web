@@ -4,13 +4,25 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = users(:jerry)
   end
-  test "user is logged in and redirected to home with correct credentials" do
+
+  test "user is logged in and redirected to home with correct credentials using 'remember me'" do
+    cookies.delete(:app_session)
     assert_difference("@user.app_sessions.count", 1) {
-      log_in(@user)
+      testing_log_in(@user, remember_me: true)
     }
-    assert_not_empty cookies[:app_session]
+    assert cookies[:app_session].present?
     assert_redirected_to root_path
   end
+
+  test "user is logged in and redirected to home with correct credentials without 'remember me'" do
+    cookies.delete(:app_session)
+    assert_difference("@user.app_sessions.count", 1) {
+      testing_log_in(@user)
+    }
+    assert_nil cookies[:app_session]
+    assert_redirected_to root_path
+  end
+
   test "error is rendered for login with incorrect credentials" do
     post login_path, params: {
       user: {
@@ -22,8 +34,8 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "logging out redirects to the root url and deletes the session" do
-    log_in(@user)
-    assert_difference("@user.app_sessions.count", -1) { log_out }
+    testing_log_in(@user)
+    assert_difference("@user.app_sessions.count", -1) { testing_log_out }
     assert_redirected_to root_path
 
     follow_redirect!

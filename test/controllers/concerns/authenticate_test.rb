@@ -21,15 +21,17 @@ class AuthenticateTest < ActionDispatch::IntegrationTest
   teardown do
     reload_routes!
   end
+
   test "request authenticated by cookie gets valid response" do
     @user.app_sessions.destroy_all
-    log_in(@user)
+    testing_log_in(@user)
 
     get edit_authenticate_test_path
 
     assert_response :ok
     assert_match(/authenticate_tests#edit/, response.body)
   end
+
   test "unauthenticated request renders login page" do
     get edit_authenticate_test_path
 
@@ -37,6 +39,7 @@ class AuthenticateTest < ActionDispatch::IntegrationTest
     assert_equal I18n.t("login_required"), flash[:notice]
     assert_select "form[action='#{login_path}']"
   end
+
   test "authentication is skipped for actions marked to do so" do
     get new_authenticate_test_path
     assert_response :ok
@@ -45,11 +48,12 @@ class AuthenticateTest < ActionDispatch::IntegrationTest
     assert_response :ok
     assert_match(/authenticate_tests#create/, response.body)
   end
+
   test "unauthenticated requests are allowed when marked" do
     get authenticate_test_path
     assert_response :ok
     assert_equal "User: ", response.body
-    log_in(@user)
+    testing_log_in(@user)
     get authenticate_test_path
     assert_response :ok
     assert_equal "User: #{@user.id}", response.body

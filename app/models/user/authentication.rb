@@ -17,8 +17,6 @@ module User::Authentication
   end
 
   def authenticate_app_session(app_session_id, token)
-    app_sessions.find(app_session_id).authenticate_token(token)
-  rescue ActiveRecord::RecordNotFound
-    nil
+    app_sessions.find_by(id: app_session_id)&.authenticate_token(token)
   end
 end

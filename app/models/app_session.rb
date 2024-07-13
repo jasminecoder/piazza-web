@@ -10,9 +10,8 @@ class AppSession < ApplicationRecord
   def to_h
     {
       user_id: user.id,
-      app_session: id,
+      app_session_id: id,
       token: token
     }
   end
 end
-

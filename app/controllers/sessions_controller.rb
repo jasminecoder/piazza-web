@@ -8,15 +8,16 @@ class SessionsController < ApplicationController
       email: login_params[:email],
       password: login_params[:password]
     )
-    if @app_session
-      # Store details in cookie
-      log_in(@app_session)
-      flash[:success] = t(".success", name: @app_session.user.name)
-      redirect_to root_path, status: :see_other
-    else
+    Rails.logger.info("@APP_SESSION #{@app_session}")
+    unless @app_session
       flash.now[:danger] = t(".incorrect_details")
       render :new, status: :unprocessable_entity
+      return
     end
+
+    log_in(@app_session, remember_me_checked?)
+    flash[:success] = t(".success", name: @app_session.user.name)
+    redirect_to root_path, status: :see_other
   end
 
   def destroy
@@ -29,6 +30,10 @@ class SessionsController < ApplicationController
   private
 
   def login_params
-    @login_params ||= params.require(:user).permit(:email, :password)
+    @login_params ||= params.require(:user).permit(:email, :password, :remember_me)
+  end
+
+  def remember_me_checked?
+    login_params[:remember_me] == "1"
   end
 end

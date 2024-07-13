@@ -25,14 +25,13 @@ module Authenticate
     Current.user.present?
   end
 
-  def log_in(app_session)
-    cookies.encrypted.permanent[:app_session] = {
-      value: app_session.to_h
-    }
+  def log_in(app_session, remember_me_checked)
+    set_app_session_summary(app_session, remember_me_checked)
   end
 
   def log_out
     Current.app_session&.destroy
+    clear_app_session_summary
   end
 
   private
@@ -43,21 +42,34 @@ module Authenticate
   end
 
   def authenticate
-    Current.app_session = authenticate_using_cookie
+    Current.app_session = get_app_session
     Current.user = Current.app_session&.user
   end
 
-  def authenticate_using_cookie
-    app_session = cookies.encrypted[:app_session]
-    authenticate_using app_session&.with_indifferent_access
+  def get_app_session
+    user_id, app_session_id, token = get_app_session_summary.values_at(:user_id, :app_session_id, :token)
+    return nil if user_id.blank? || app_session_id.blank? || token.blank?
+    user = User.find_by(id: user_id)
+    return nil if user.blank?
+    user.authenticate_app_session(app_session_id, token)
   end
 
-  def authenticate_using(data)
-    data => { user_id:, app_session:, token: }
+  def get_app_session_summary
+    (cookies.encrypted[:app_session] || session[:app_session])&.with_indifferent_access || {}
+  end
 
-    user = User.find(user_id)
-    user.authenticate_app_session(app_session, token)
-  rescue NoMatchingPatternError, ActiveRecord::RecordNotFound
-    nil
+  def set_app_session_summary(app_session, remember_me_checked)
+    clear_app_session_summary
+    if remember_me_checked
+      cookies.encrypted.permanent[:app_session] = {value: app_session.to_h}
+    else
+      session[:app_session] = app_session.to_h
+    end
+  end
+
+  def clear_app_session_summary
+    # cookies.encrypted.permanent[:app_session] = nil
+    cookies.delete(:app_session)
+    session.delete(:app_session)
   end
 end
