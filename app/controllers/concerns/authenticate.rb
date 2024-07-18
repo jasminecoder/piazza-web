@@ -47,11 +47,14 @@ module Authenticate
   end
 
   def get_app_session
+    Rails.logger.info("GET APP SESSION SUMARY: #{get_app_session_summary}")
     user_id, app_session_id, token = get_app_session_summary.values_at(:user_id, :app_session_id, :token)
     return nil if user_id.blank? || app_session_id.blank? || token.blank?
     user = User.find_by(id: user_id)
     return nil if user.blank?
-    user.authenticate_app_session(app_session_id, token)
+    app_session = user.authenticate_app_session(app_session_id, token)
+    clear_app_session_summary if app_session.nil?
+    app_session
   end
 
   def get_app_session_summary
@@ -71,5 +74,6 @@ module Authenticate
     # cookies.encrypted.permanent[:app_session] = nil
     cookies.delete(:app_session)
     session.delete(:app_session)
+    puts "IN CLEAR_APP_SESSION_SUMARY: #{get_app_session_summary}"
   end
 end

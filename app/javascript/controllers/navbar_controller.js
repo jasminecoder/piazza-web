@@ -2,7 +2,7 @@ import { Controller } from '@hotwired/stimulus'
 
 // Connects to data-controller="navbar"
 export default class extends Controller {
-  static targets = ['menu', 'button', 'userMenuButton', 'userMenu', 'navLink']
+  static targets = ['menu', 'button', 'userMenuButton', 'userMenu']
 
   connect() {
     this.buttonTarget.addEventListener('click', () => this.toggleMenu())

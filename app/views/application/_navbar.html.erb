@@ -51,7 +51,7 @@
               </svg>
             </div>
           </button>
-          <div data-navbar-target="userMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2">
+          <div data-navbar-target="userMenu" class="dropdown hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2">
             <%= link_to t(".profile"), "#", class: 'block px-4 py-2 text-slate-600 hover:bg-gray-100' %>
             <%= link_to t(".my_ads"), "#", class: 'block px-4 py-2 text-slate-600 hover:bg-gray-100' %>
             <%= link_to t(".saved_ads"), "#", class: 'block px-4 py-2 text-slate-600 hover:bg-gray-100' %>
@@ -60,7 +60,7 @@
         </div>
       <% else %>
         <%= link_to t(".sign_up"), sign_up_path, class: 'bg-white text-slate-600 px-4 py-2 rounded-xl hover:bg-lime-500 hover:text-white' %>
-        <%= link_to t(".log_in"), login_path, class: 'bg-indigo-600 text-white px-4 py-2 rounded-xl hover:bg-indigo-500' %>
+        <%= link_to t(".login"), login_path, class: 'bg-indigo-600 text-white px-4 py-2 rounded-xl hover:bg-indigo-500' %>
       <% end %>
     </div>
     <%# ends desktop navbar %>

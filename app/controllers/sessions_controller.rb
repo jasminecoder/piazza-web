@@ -8,7 +8,6 @@ class SessionsController < ApplicationController
       email: login_params[:email],
       password: login_params[:password]
     )
-    Rails.logger.info("@APP_SESSION #{@app_session}")
     unless @app_session
       flash.now[:danger] = t(".incorrect_details")
       render :new, status: :unprocessable_entity
@@ -16,6 +15,7 @@ class SessionsController < ApplicationController
     end
 
     log_in(@app_session, remember_me_checked?)
+    Rails.logger.info("LOG_IN PARAMETERS: @APPSESSION: #{@app_session}, REMEMBER_ME: #{remember_me_checked?}")
     flash[:success] = t(".success", name: @app_session.user.name)
     redirect_to root_path, status: :see_other
   end
