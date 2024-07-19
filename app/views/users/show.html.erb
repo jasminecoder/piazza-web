@@ -1,0 +1,83 @@
+<% content_for :title, Current.user.name %>
+<div class="pb-20">
+<%= turbo_frame_tag :user_details do %>
+<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+<div class="border-2 border-neutral-200 rounded-md w-11/12 px-5 md:px-0 md:w-2/3 mx-auto">
+  <div class="sm:mx-auto sm:w-full sm:max-w-sm mt-10">
+    <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+    <%= t(".your_details")%>
+    </h2>
+  </div>
+  <div class="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
+    <%= form_with(
+      model: @user,
+      url: profile_path,
+      class: "space-y-6"
+    ) do |form| %>
+      <div>
+        <%= form.label :name, class: "block text-sm font-medium leading-6 text-gray-900" %>
+        <div class="mt-2">
+          <%= form.text_field :name, class: "block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+        </div>
+      </div>
+     <div>
+        <%= form.label :email, class: "block text-sm font-medium leading-6 text-gray-900" %>
+        <div class="mt-2">
+          <%= form.email_field :email, class: "block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+        </div>
+      </div>
+      <div class="mt-2 pb-10">
+        <%= form.submit t(".save_profile"), class: "flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" %>
+        <%= render "application/flashes" if turbo_frame_request? %>
+      </div>
+      
+    <% end %>
+  </div>
+  </div>
+</div>
+    <%= turbo_stream.update :current_user_name do %>
+        <%= Current.user.name %>
+    <% end %>
+    <%= turbo_stream.update :current_user_name_mobile_screen do %>
+        <%= Current.user.name %>
+    <% end %>
+<% end %>
+
+<%= turbo_frame_tag :change_password do %>
+<div class="flex min-h-full flex-col justify-center px-6 lg:px-8">
+<div class="border-2 border-neutral-200 rounded-md w-11/12 px-5 md:px-0 md:w-2/3 mx-auto">
+  <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+    <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+    <%= t(".change_password")%>
+    </h2>
+  </div>
+  <div class="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
+    <%= form_with(
+      model: @user,
+      url: users_change_password_path,
+      class: "space-y-6"
+    ) do |form| %>
+      <div>
+        <%= form.label :password_challenge, value: t(".current_password"), class: "block text-sm font-medium leading-6 text-gray-900" %>
+        <div class="mt-2">
+          <%= form.password_field :password_challenge, class: "block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+        </div>
+      </div>
+     <div>
+        <%= form.label :password, value: t(".new_password"), class: "block text-sm font-medium leading-6 text-gray-900" %>
+        <div class="mt-2">
+          <%= form.password_field :password, class: "block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+        </div>
+      </div>
+      
+      <div class="mt-2 pb-10">
+        <%= form.submit t(".change_password_button"), class: "flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" %>
+        <%= render "application/flashes" if turbo_frame_request? %>
+      </div>
+    <% end %>
+  </div>
+  </div>
+  </div>
+</div>
+<% end %>
+</div>

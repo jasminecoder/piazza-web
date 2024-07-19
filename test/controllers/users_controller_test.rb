@@ -37,6 +37,20 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       }
     end
   end
+
+  test "can update user details" do 
+    @user = users(:jerry)
+    testing_log_in @user
+    
+    patch profile_path, params: {
+            user: {
+              name: "Jerry Seinfeld"
+            }
+    }
+    
+    assert_redirected_to profile_path
+    assert_equal "Jerry Seinfeld", @user.reload.name 
+  end
   # assert_response :unprocessable_entity
   # assert_select "p.is-danger",
   # text:

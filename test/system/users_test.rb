@@ -36,7 +36,7 @@ class UsersTest < ApplicationSystemTestCase
     fill_in User.human_attribute_name(:password), with: "wrong"
     
     click_button I18n.t("sessions.new.submit")
-    assert_selector ".msg-danger", text: I18n.t("sessions.create.incorrect_details")
+    assert_selector ".msg-error", text: I18n.t("sessions.create.incorrect_details")
 
     fill_in User.human_attribute_name(:email), with: "jerry@example.com"
     fill_in User.human_attribute_name(:password), with: "password"
@@ -45,6 +45,19 @@ class UsersTest < ApplicationSystemTestCase
     assert_current_path root_path
     assert_selector ".msg-success", text: I18n.t("sessions.create.success", name: "Jerry") 
     assert_selector ".dropdown", visible: false
+  end
+
+  test "can update name" do 
+    log_in(users(:jerry))
+
+    visit profile_path 
+    
+    fill_in User.human_attribute_name(:name), with: "Jerry Seinfeld"
+    click_button I18n.t("users.show.save_profile")
+
+    assert_selector "form .msg-success", text: I18n.t("users.update.success")
+    assert_selector "#current_user_name", text: "Jerry Seinfeld"
+    
   end
   # test "visiting the index" do
   #   visit users_url

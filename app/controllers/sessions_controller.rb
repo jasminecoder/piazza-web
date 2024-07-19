@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
       password: login_params[:password]
     )
     unless @app_session
-      flash.now[:danger] = t(".incorrect_details")
+      flash.now[:error] = t(".incorrect_details")
       render :new, status: :unprocessable_entity
       return
     end

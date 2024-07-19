@@ -30,7 +30,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
         password: "password"
       }
     }
-    assert_select ".msg-danger", I18n.t("sessions.create.incorrect_details")
+    assert_select ".msg-error", I18n.t("sessions.create.incorrect_details")
   end
 
   test "logging out redirects to the root url and deletes the session" do

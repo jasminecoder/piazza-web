@@ -4,7 +4,8 @@ module AuthenticationHelpers
       user: {
         email: user.email,
         password: password,
-        remember_me: remember_me ? "1" : "0"
+        remember_me: remember_me ? "1" : "0",
+        # password_challenge: ""
       }
     }
   end
